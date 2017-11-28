@@ -2,8 +2,8 @@ package main
 
 import (
 	"flag"
-	"ki18n/driver"
 	"fmt"
+	"ki18n/driver"
 )
 
 func main() {
@@ -11,8 +11,10 @@ func main() {
 	var filename string
 	var version bool
 	var merge bool
+	var configFile string
 
 	flag.StringVar(&filename, "f", "language.xlsx", "解析的文件名")
+	flag.StringVar(&configFile, "c", "default", "i18n.ini 的配置选项")
 	flag.BoolVar(&merge, "m", false, "是否合并语言包")
 	flag.BoolVar(&version, "v", false, "版本")
 	flag.Parse()
@@ -25,8 +27,9 @@ func main() {
 	excel := driver.NewExcel(filename)
 
 	if merge {
-		excel.OutputAll()
+		excel.OutputAll(configFile)
 	} else {
-		excel.Output()
+		excel.Output(configFile)
 	}
+
 }
