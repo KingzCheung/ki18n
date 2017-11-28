@@ -2,6 +2,12 @@
 
 
 [[projects]]
+  branch = "master"
+  name = "github.com/Unknwon/goconfig"
+  packages = ["."]
+  revision = "87a46d97951ee1ea20ed3b24c25646a79e87ba5d"
+
+[[projects]]
   name = "github.com/tealeg/xlsx"
   packages = ["."]
   revision = "8be35264fa75a1bbe954ce51eba04f273e2c59e5"
@@ -10,6 +16,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "70cbe6d16aabad28372e515f365b2c68c6033ed65c0b1b7e5d23843fd3b5ab7e"
+  inputs-digest = "8a1bef8da3cf4a4056f173e61c69ccdccb58d5ac9164e12633aa578c41bfd84a"
   solver-name = "gps-cdcl"
   solver-version = 1

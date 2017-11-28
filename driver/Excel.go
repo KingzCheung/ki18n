@@ -6,13 +6,9 @@ import (
 	"encoding/json"
 	"os"
 	"io/ioutil"
+	"ki18n/input"
 )
 
-var language []string = []string{
-	"zh-CN",
-	"zh-HK",
-	"en-US",
-}
 
 type Excel struct {
 	Name string
@@ -59,11 +55,8 @@ func (this *Excel) parse(cel int) map[string]string {
 			if len(row.Cells) < cel {
 				lang[jsonKey] = ""
 			}
-
 			lang[jsonKey] = row.Cells[cel+1].String()
-
 		}
-
 	}
 
 	return lang
@@ -72,10 +65,10 @@ func (this *Excel) parse(cel int) map[string]string {
 
 //所有语言包合成一个JSON
 
-func (this *Excel) parseAll() map[string]map[string]string {
+func (this *Excel) parseAll(section string) map[string]map[string]string {
 	locales := make(map[string]map[string]string)
 
-	for k, v := range language {
+	for k, v := range input.Language(section) {
 		locales[v] = this.parse(k)
 	}
 
@@ -95,8 +88,8 @@ func (this *Excel) toJson(lang interface{}) []byte {
 
 // 输出语言包,合成一个语言包json
 
-func (this *Excel) OutputAll() {
-	content := this.toJson(this.parseAll())
+func (this *Excel) OutputAll(section string) {
+	content := this.toJson(this.parseAll(section))
 	err := ioutil.WriteFile("locales.json", content, 0755)
 	if err != nil {
 		fmt.Println(err.Error())
@@ -107,7 +100,7 @@ func (this *Excel) OutputAll() {
 }
 
 // 输出语言包,每列一个包
-func (this *Excel) Output() {
+func (this *Excel) Output(section string) {
 	langdir := "lang"
 	if isExist, _ := this.PathExists(langdir); !isExist {
 		err := os.Mkdir(langdir, 0755)
@@ -117,7 +110,7 @@ func (this *Excel) Output() {
 		}
 	}
 
-	for k, v := range language {
+	for k, v := range input.Language(section) {
 		content := this.toJson(this.parse(k))
 		err := ioutil.WriteFile(langdir+"/"+v+".json", content, 0755)
 		if err != nil {
