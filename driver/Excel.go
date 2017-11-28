@@ -7,6 +7,7 @@ import (
 	"os"
 	"io/ioutil"
 	"ki18n/input"
+	"strings"
 )
 
 
@@ -51,7 +52,11 @@ func (this *Excel) parse(cel int) map[string]string {
 				continue
 			}
 			jsonKey := row.Cells[0].String()
-
+			//去除空格
+			jsonKey = strings.Trim(jsonKey,"\n")
+			jsonKey = strings.Trim(jsonKey,"\r\n")
+			jsonKey = strings.Trim(jsonKey,"\r")
+			jsonKey = strings.Trim(jsonKey," ")
 			if len(row.Cells) < cel {
 				lang[jsonKey] = ""
 			}

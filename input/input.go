@@ -18,6 +18,7 @@ func Language(section string) []string {
 	if err != nil {
 		return language
 	}
+
 	val, _ := config.GetValue(section, "language")
 	return strings.Split(val, ",")
 }
