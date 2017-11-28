@@ -3,7 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
-	"ki18n/driver"
+	output2 "ki18n/output"
 )
 
 func main() {
@@ -12,9 +12,11 @@ func main() {
 	var version bool
 	var merge bool
 	var configFile string
+	var outputType string
 
 	flag.StringVar(&filename, "f", "language.xlsx", "解析的文件名")
 	flag.StringVar(&configFile, "c", "default", "i18n.ini 的配置选项")
+	flag.StringVar(&outputType, "t", "json", "生成文件类型,支持[json,php]")
 	flag.BoolVar(&merge, "m", false, "是否合并语言包")
 	flag.BoolVar(&version, "v", false, "版本")
 	flag.Parse()
@@ -24,12 +26,12 @@ func main() {
 		return
 	}
 
-	excel := driver.NewExcel(filename)
+	output := output2.NewOutput(filename)
 
 	if merge {
-		excel.OutputAll(configFile)
+		output.All(configFile)
 	} else {
-		excel.Output(configFile)
+		output.List(configFile,outputType)
 	}
 
 }
