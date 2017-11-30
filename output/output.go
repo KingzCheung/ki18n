@@ -30,11 +30,21 @@ func ToPHP(lang map[string]string) []byte {
 	return []byte(php)
 }
 
+func ToStrings(lang map[string]string) []byte {
+	var str string
+	for k, v := range lang {
+		str += "\"" + k + "\" = \"" + v + "\"\n"
+	}
+	return []byte(str)
+}
+
 // 返回[]BYTE数据
 func To(outType string, lang map[string]string) []byte {
 	switch strings.ToLower(outType) {
-	case "php":
+	case PHP:
 		return ToPHP(lang)
+	case IOS:
+		return ToStrings(lang)
 	default:
 		return ToJson(lang)
 	}

@@ -68,7 +68,7 @@ ki18n -f yourxlsxname.xlsx
 
 默认会生成一个`lang`目录,里面对应生成`i18n.ini`配置的JSON
 
-
+#### JSON
 
 合并语言包为一个JSON使用 `-m`选项:
 
@@ -78,7 +78,7 @@ ki18n -m -f yourxlsxname.xlsx
 
 默认会生成一个叫`locales.json`的文件
 
-
+#### PHP
 
 生成 php格式的语言包:
 
@@ -87,3 +87,12 @@ ki18n -t=php -f=yourxlsxname.xlsx
 ```
 
 默认生成php格式的数组,支持 `thinkphp`,`laravel`
+
+####iOS
+
+生成 iOS格式语言包:
+
+```shell
+ki18n -t=strings -f=yourxlsxname.xlsx
+```
+
