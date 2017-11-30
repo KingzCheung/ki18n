@@ -58,7 +58,7 @@ Excel 格式:
 language = zh-CN,zh-HK,en-US
 ```
 
-
+#### JSON
 
 Excel 文件取命令行工作目录下的`language.xlsx`  可以通过 `-f`指定:
 
@@ -68,7 +68,7 @@ ki18n -f yourxlsxname.xlsx
 
 默认会生成一个`lang`目录,里面对应生成`i18n.ini`配置的JSON
 
-#### JSON
+
 
 合并语言包为一个JSON使用 `-m`选项:
 
