@@ -88,7 +88,7 @@ ki18n -t=php -f=yourxlsxname.xlsx
 
 默认生成php格式的数组,支持 `thinkphp`,`laravel`
 
-####iOS
+####  iOS
 
 生成 iOS格式语言包:
 
