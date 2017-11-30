@@ -1,4 +1,4 @@
-# ki18n XLSX -> JSON 生成语言包工具
+# ki18n XLSX => (JSON,PHP,iOS) 生成语言包工具
 
 ### 安装
 
