@@ -38,9 +38,9 @@ func (this *Excel) Parse(cel int) map[string]string {
 			}
 			jsonKey := row.Cells[0].String()
 			//去除空格
-			jsonKey = strings.Trim(jsonKey, "\n")
-			jsonKey = strings.Trim(jsonKey, "\r\n")
-			jsonKey = strings.Trim(jsonKey, "\r")
+			jsonKey = strings.TrimRight(jsonKey, "\n")
+			jsonKey = strings.TrimRight(jsonKey, "\r\n")
+			jsonKey = strings.TrimRight(jsonKey, "\r")
 			jsonKey = strings.Trim(jsonKey, " ")
 			if len(row.Cells) < cel {
 				lang[jsonKey] = ""
