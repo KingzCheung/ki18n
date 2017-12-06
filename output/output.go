@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"strings"
+	"ki18n/input"
 )
 
 var zy []string = []string{
@@ -44,6 +45,11 @@ func ToJson(lang interface{}) []byte {
 	return enc
 }
 
+func ToJsonMerge(lang map[string]string, section string) []map[string]string {
+	locales := make([]map[string]string,0)
+
+}
+
 //返回 PHP 格式数据
 func ToPHP(lang map[string]string) []byte {
 	prefixString := "<?php\n return [\n"
@@ -73,6 +79,8 @@ func To(outType string, lang map[string]string) []byte {
 		return ToPHP(lang)
 	case IOS:
 		return ToStrings(lang)
+	case JSON:
+		return ToJson(lang)
 	default:
 		return ToJson(lang)
 	}

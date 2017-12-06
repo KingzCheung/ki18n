@@ -27,7 +27,7 @@ func (this *Excel) ReadFile() *xlsx.File {
 }
 
 //解析器
-func (this *Excel) Parse(cel int) map[string]string {
+func (this *Excel) Parse(col int) map[string]string {
 	var lang = make(map[string]string, 5)
 
 	for _, sheet := range this.ReadFile().Sheet {
@@ -42,10 +42,10 @@ func (this *Excel) Parse(cel int) map[string]string {
 			jsonKey = strings.TrimRight(jsonKey, "\r\n")
 			jsonKey = strings.TrimRight(jsonKey, "\r")
 			jsonKey = strings.Trim(jsonKey, " ")
-			if len(row.Cells) < cel {
+			if len(row.Cells) < col {
 				lang[jsonKey] = ""
 			}
-			lang[jsonKey] = row.Cells[cel+1].String()
+			lang[jsonKey] = row.Cells[col+1].String()
 		}
 	}
 

@@ -16,13 +16,7 @@ const  (
 
 // 输出语言包,合成一个语言包json
 type Output struct {
-	excel *driver.Excel
-}
-
-func NewOutput(filename string) *Output {
-	return &Output{
-		excel: driver.NewExcel(filename),
-	}
+	driver driver.Driver
 }
 
 func (this *Output) PathExists(path string) (bool, error) {
@@ -37,7 +31,8 @@ func (this *Output) PathExists(path string) (bool, error) {
 }
 
 func (this *Output) All(section string) {
-	content := ToJson(this.excel.ParseAll(section))
+
+	content := ToJson(this.driver.ParseAll(section))
 	err := ioutil.WriteFile("locales.json", content, 0755)
 	if err != nil {
 		fmt.Println(err.Error())
@@ -59,7 +54,7 @@ func (this *Output) List(section string, outType string) {
 	}
 
 	for k, v := range input.Language(section) {
-		content := To(outType, this.excel.Parse(k))
+		content := To(outType, this.driver.Parse(k))
 		err := ioutil.WriteFile(langdir+"/"+v+"."+outType, content, 0755)
 		if err != nil {
 			fmt.Println(err.Error())

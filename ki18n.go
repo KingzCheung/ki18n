@@ -4,6 +4,7 @@ import (
 	"flag"
 	"fmt"
 	output2 "ki18n/output"
+	"ki18n/driver"
 )
 
 func main() {
@@ -31,7 +32,9 @@ func main() {
 	if merge {
 		output.All(configFile)
 	} else {
-		output.List(configFile,outputType)
+		output.List(configFile, outputType)
 	}
 
 }
+
+
