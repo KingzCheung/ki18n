@@ -13,7 +13,7 @@ var language []string = []string{
 }
 
 //获取语言生成的语言列表
-func Language(section string) []string {
+func Language() []string {
 	config, err := LoadConfigFile(ini)
 	if err != nil {
 		return language

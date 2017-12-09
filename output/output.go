@@ -54,9 +54,9 @@ func ToJson(lang map[string]string) []byte {
 
 // 合并语言包数据为一个文件
 
-func ToJsonMerge(section string, driver driver.Driver) []byte {
+func ToJsonMerge(driver driver.Driver) []byte {
 	locales := make(map[string]map[string]string, 0)
-	for k, v := range input.Language(section) {
+	for k, v := range input.Language() {
 		locales[v] = driver.Parse(k + 1)
 	}
 

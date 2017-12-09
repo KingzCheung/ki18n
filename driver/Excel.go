@@ -65,10 +65,10 @@ func (this *Excel) Parse(col int) map[string]string {
 
 //所有语言包合成一个JSON
 
-func (this *Excel) ParseAll(section string) map[string]map[string]string {
+func (this *Excel) ParseAll() map[string]map[string]string {
 	locales := make(map[string]map[string]string)
 
-	for k, v := range input.Language(section) {
+	for k, v := range input.Language() {
 		parse := this.Parse(k)
 		locales[v] = parse
 	}
