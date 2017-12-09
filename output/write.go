@@ -8,18 +8,18 @@ import (
 	"ki18n/driver"
 )
 
-const  (
-	PHP = "php"
+const (
+	PHP  = "php"
 	JSON = "json"
-	IOS = "strings"
+	IOS  = "strings"
 )
 
 // 输出语言包,合成一个语言包json
-type Output struct {
-	driver driver.Driver
+type Write struct {
+	Driver driver.Driver
 }
 
-func (this *Output) PathExists(path string) (bool, error) {
+func (this *Write) PathExists(path string) (bool, error) {
 	_, err := os.Stat(path)
 	if err == nil {
 		return true, nil
@@ -30,9 +30,9 @@ func (this *Output) PathExists(path string) (bool, error) {
 	return false, err
 }
 
-func (this *Output) All(section string) {
+func (this *Write) All(section string) {
 
-	content := ToJson(this.driver.ParseAll(section))
+	content := ToJsonMerge(section, this.Driver)
 	err := ioutil.WriteFile("locales.json", content, 0755)
 	if err != nil {
 		fmt.Println(err.Error())
@@ -43,7 +43,7 @@ func (this *Output) All(section string) {
 }
 
 // 输出语言包,每列一个包
-func (this *Output) List(section string, outType string) {
+func (this *Write) List(section string, outType string) {
 	langdir := "lang"
 	if isExist, _ := this.PathExists(langdir); !isExist {
 		err := os.Mkdir(langdir, 0755)
@@ -54,7 +54,7 @@ func (this *Output) List(section string, outType string) {
 	}
 
 	for k, v := range input.Language(section) {
-		content := To(outType, this.driver.Parse(k))
+		content := To(outType, this.Driver.Parse(k))
 		err := ioutil.WriteFile(langdir+"/"+v+"."+outType, content, 0755)
 		if err != nil {
 			fmt.Println(err.Error())

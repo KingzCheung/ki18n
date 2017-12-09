@@ -12,6 +12,7 @@ var language []string = []string{
 	"en-US",
 }
 
+
 //获取语言生成的语言列表
 func Language(section string) []string {
 	config, err := LoadConfigFile(ini)

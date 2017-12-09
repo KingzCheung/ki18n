@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"strings"
 	"ki18n/input"
+	"ki18n/driver"
 )
 
 var zy []string = []string{
@@ -36,7 +37,7 @@ func inArray(ver string, arr []string) (b bool) {
 }
 
 // 返回JSON 格式数据
-func ToJson(lang interface{}) []byte {
+func ToJson(lang map[string]string) []byte {
 	enc, err := json.Marshal(lang)
 	if err != nil {
 		fmt.Println(err.Error())
@@ -45,9 +46,21 @@ func ToJson(lang interface{}) []byte {
 	return enc
 }
 
-func ToJsonMerge(lang map[string]string, section string) []map[string]string {
-	locales := make([]map[string]string,0)
+// 合并语言包数据为一个文件
 
+func ToJsonMerge(section string, driver driver.Driver) []byte {
+	locales := make(map[string]map[string]string, 0)
+	for k, v := range input.Language(section) {
+		locales[v] = driver.Parse(k + 1)
+	}
+
+	enc, err := json.Marshal(locales)
+	if err != nil {
+		fmt.Println(err.Error())
+		return []byte(nil)
+	}
+
+	return enc
 }
 
 //返回 PHP 格式数据

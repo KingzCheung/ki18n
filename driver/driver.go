@@ -5,8 +5,4 @@ package driver
 type Driver interface {
 	// 解析数据
 	Parse(col int) map[string]string
-	ParseAll(section string) map[string]map[string]string
 }
-
-
-

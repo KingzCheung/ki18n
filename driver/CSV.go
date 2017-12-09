@@ -31,7 +31,6 @@ func (this *CSV) Parse(col int) map[string]string {
 	return lang
 }
 
-
 // 读取文件返回二维数据
 func (this *CSV) ReadFile() (csvs [][]string) {
 

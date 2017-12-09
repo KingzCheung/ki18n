@@ -3,8 +3,15 @@ package main
 import (
 	"flag"
 	"fmt"
-	output2 "ki18n/output"
+	"ki18n/output"
+	"strings"
+	"errors"
 	"ki18n/driver"
+)
+
+const (
+	CSV  = "csv"
+	XLSX = "xlsx"
 )
 
 func main() {
@@ -27,14 +34,37 @@ func main() {
 		return
 	}
 
-	output := output2.NewOutput(filename)
+	d, err := FileType(filename)
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
+	write := output.Write{
+		d,
+	}
 
 	if merge {
-		output.All(configFile)
+		write.All(configFile)
 	} else {
-		output.List(configFile, outputType)
+		write.List(configFile, outputType)
 	}
 
 }
 
-
+func FileType(filename string) (driver.Driver, error) {
+	strArr := strings.Split(filename, ".")
+	last := len(strArr) - 1
+	if last < 0 {
+		return nil, errors.New("文件名后缀错误")
+	}
+	var d driver.Driver
+	switch strings.ToLower(strArr[last]) {
+	case CSV:
+		d = driver.NewCSV(filename)
+	case XLSX:
+		d = driver.NewExcel(filename)
+	default:
+		d = driver.NewExcel(filename)
+	}
+	return d, nil
+}
