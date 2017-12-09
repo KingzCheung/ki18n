@@ -12,7 +12,6 @@ var language []string = []string{
 	"en-US",
 }
 
-
 //获取语言生成的语言列表
 func Language(section string) []string {
 	config, err := LoadConfigFile(ini)
@@ -20,6 +19,6 @@ func Language(section string) []string {
 		return language
 	}
 
-	val, _ := config.GetValue(section, "language")
+	val, _ := config.GetValue("DEFAULT", "language")
 	return strings.Split(val, ",")
 }

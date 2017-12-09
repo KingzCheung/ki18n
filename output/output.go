@@ -8,6 +8,12 @@ import (
 	"ki18n/driver"
 )
 
+const (
+	PHP  = "php"
+	JSON = "json"
+	IOS  = "strings"
+)
+
 var zy []string = []string{
 	"\\",
 	"\"",

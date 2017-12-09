@@ -29,6 +29,7 @@ func (this *Excel) ReadFile() *xlsx.File {
 //解析器
 func (this *Excel) Parse(col int) map[string]string {
 	var lang = make(map[string]string, 5)
+	var jsonKey string
 
 	for _, sheet := range this.ReadFile().Sheet {
 		//遍历 行
@@ -36,16 +37,25 @@ func (this *Excel) Parse(col int) map[string]string {
 			if rk == 0 {
 				continue
 			}
-			jsonKey := row.Cells[0].String()
+			if len(row.Cells) > 0 {
+				jsonKey = row.Cells[0].String()
+			}else {
+				continue
+			}
 			//去除空格
 			jsonKey = strings.TrimRight(jsonKey, "\n")
 			jsonKey = strings.TrimRight(jsonKey, "\r\n")
 			jsonKey = strings.TrimRight(jsonKey, "\r")
 			jsonKey = strings.Trim(jsonKey, " ")
-			if len(row.Cells) < col {
-				lang[jsonKey] = ""
+			if strings.Trim(jsonKey," ") == "" {
+				continue
 			}
-			lang[jsonKey] = row.Cells[col+1].String()
+			if len(row.Cells) == 0 {
+				lang[jsonKey] = ""
+			} else {
+				lang[jsonKey] = row.Cells[col+1].String()
+
+			}
 		}
 	}
 
@@ -59,7 +69,8 @@ func (this *Excel) ParseAll(section string) map[string]map[string]string {
 	locales := make(map[string]map[string]string)
 
 	for k, v := range input.Language(section) {
-		locales[v] = this.Parse(k)
+		parse := this.Parse(k)
+		locales[v] = parse
 	}
 
 	return locales

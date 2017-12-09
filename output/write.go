@@ -8,12 +8,6 @@ import (
 	"ki18n/driver"
 )
 
-const (
-	PHP  = "php"
-	JSON = "json"
-	IOS  = "strings"
-)
-
 // 输出语言包,合成一个语言包json
 type Write struct {
 	Driver driver.Driver
