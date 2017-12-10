@@ -25,7 +25,10 @@ func (this *CSV) Parse(col int) map[string]string {
 
 	var lang = make(map[string]string)
 
-	for _, v := range this.ReadFile() {
+	for k, v := range this.ReadFile() {
+		if k == 0 {
+			continue
+		}
 		lang[v[0]] = v[col]
 	}
 	return lang
