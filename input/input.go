@@ -24,10 +24,10 @@ func Language() []string {
 	return strings.Split(val, ",")
 }
 
-func Splitter() string {
+func Splitter(defaultSplit string) string {
 	config, err := LoadConfigFile(ini)
 	if err != nil {
-		return ";"
+		return defaultSplit
 	}
 	val, _ := config.GetValue(section, "splitter")
 	return val

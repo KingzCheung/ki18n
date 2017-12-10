@@ -53,7 +53,7 @@ func (this *CSV) ReadFile() (csvs [][]string) {
 		}
 
 		for _, v := range rows {
-			cols := strings.Split(v, input.Splitter())
+			cols := strings.Split(v, input.Splitter(";"))
 			csvs = append(csvs, cols)
 		}
 	}
