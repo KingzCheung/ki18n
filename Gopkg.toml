@@ -28,3 +28,7 @@
 [[constraint]]
   branch = "master"
   name = "github.com/Unknwon/goconfig"
+
+[[constraint]]
+  branch = "master"
+  name = "github.com/axgle/mahonia"

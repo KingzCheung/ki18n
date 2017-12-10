@@ -6,6 +6,7 @@ import (
 	"encoding/csv"
 	"io"
 	"strings"
+	"ki18n/input"
 )
 
 type CSV struct {
@@ -25,7 +26,6 @@ func (this *CSV) Parse(col int) map[string]string {
 	var lang = make(map[string]string)
 
 	for _, v := range this.ReadFile() {
-
 		lang[v[0]] = v[col]
 	}
 	return lang
@@ -50,7 +50,7 @@ func (this *CSV) ReadFile() (csvs [][]string) {
 		}
 
 		for _, v := range rows {
-			cols := strings.Split(v, ";")
+			cols := strings.Split(v, input.Splitter())
 			csvs = append(csvs, cols)
 		}
 	}

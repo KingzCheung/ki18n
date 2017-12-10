@@ -24,7 +24,7 @@ func (this *Write) PathExists(path string) (bool, error) {
 	return false, err
 }
 
-func (this *Write) All() {
+func (this *Write) all() {
 
 	content := ToJsonMerge(this.Driver)
 	err := ioutil.WriteFile("locales.json", content, 0755)
@@ -37,7 +37,7 @@ func (this *Write) All() {
 }
 
 // 输出语言包,每列一个包
-func (this *Write) List(outType string) {
+func (this *Write) list(outType string) {
 	langdir := "lang"
 	if isExist, _ := this.PathExists(langdir); !isExist {
 		err := os.Mkdir(langdir, 0755)
@@ -58,4 +58,13 @@ func (this *Write) List(outType string) {
 	fmt.Println("语言包生成完成!")
 	return
 
+}
+
+// 输出
+func (this *Write) Run(outType string) {
+	if input.IsMerge() {
+		this.all()
+		return
+	}
+	this.list(outType)
 }

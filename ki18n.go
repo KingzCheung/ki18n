@@ -18,12 +18,10 @@ func main() {
 	//获取文件名
 	var filename string
 	var version bool
-	var merge bool
 	var outputType string
 
 	flag.StringVar(&filename, "f", "language.xlsx", "解析的文件名")
 	flag.StringVar(&outputType, "t", "json", "生成文件类型,支持[json,php,strings]")
-	flag.BoolVar(&merge, "m", false, "是否合并语言包")
 	flag.BoolVar(&version, "v", false, "版本")
 	flag.Parse()
 
@@ -41,11 +39,8 @@ func main() {
 		d,
 	}
 
-	if merge {
-		write.All()
-	} else {
-		write.List(outputType)
-	}
+	// 输出
+	write.Run(outputType)
 
 }
 
