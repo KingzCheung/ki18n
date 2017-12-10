@@ -105,6 +105,6 @@ ki18n -t=strings -f=yourxlsxname.xlsx
 `csv`格式文件默认分割符为 `;` 如果发现有冲突可以在`i18n.ini` 配置
 
 ```ini
-splitter = ";"
+splitter = ,
 ```
 
