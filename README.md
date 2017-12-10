@@ -54,7 +54,7 @@ Excel 格式:
 可以通过 i18n.ini 配置文件扩展:
 
 ```ini
-[default]
+[DEFAULT]
 language = zh-CN,zh-HK,en-US
 ```
 
@@ -70,13 +70,15 @@ ki18n -f yourxlsxname.xlsx
 
 
 
-合并语言包为一个JSON使用 `-m`选项:
+有一些前端项目使用的语言包可能需要合并为一个JSON 包，此时可以向`i18n.ini` 添加以下选项
 
-```shell
-ki18n -m -f yourxlsxname.xlsx
+```ini
+merge = true
 ```
 
 默认会生成一个叫`locales.json`的文件
+
+> 当此选项开启时， -t 选项会失效，并强行输出JSON包
 
 #### PHP
 
@@ -94,5 +96,15 @@ ki18n -t=php -f=yourxlsxname.xlsx
 
 ```shell
 ki18n -t=strings -f=yourxlsxname.xlsx
+```
+
+
+
+### 添加CSV 格式
+
+`csv`格式文件默认分割符为 `;` 如果发现有冲突可以在`i18n.ini` 配置
+
+```ini
+splitter = ";"
 ```
 
