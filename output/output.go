@@ -57,7 +57,7 @@ func ToJson(lang map[string]string) []byte {
 func ToJsonMerge(driver driver.Driver) []byte {
 	locales := make(map[string]map[string]string, 0)
 	for k, v := range input.Language() {
-		locales[v] = driver.Parse(k + 1)
+		locales[v] = driver.Parse(k)
 	}
 
 	enc, err := json.Marshal(locales)

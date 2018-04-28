@@ -58,7 +58,6 @@ func (this *Excel) Parse(col int) map[string]string {
 			}
 		}
 	}
-
 	return lang
 
 }

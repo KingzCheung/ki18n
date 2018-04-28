@@ -24,6 +24,7 @@ func (this *Write) PathExists(path string) (bool, error) {
 	return false, err
 }
 
+//合并输出一个语言包
 func (this *Write) all() {
 
 	content := ToJsonMerge(this.Driver)
