@@ -1,11 +1,11 @@
 package output
 
 import (
-	"io/ioutil"
 	"fmt"
+	"github.com/KingzCheung/ki18n/driver"
+	"github.com/KingzCheung/ki18n/input"
+	"io/ioutil"
 	"os"
-	"ki18n/input"
-	"ki18n/driver"
 )
 
 // 输出语言包,合成一个语言包json

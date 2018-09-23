@@ -1,12 +1,12 @@
 package main
 
 import (
+	"errors"
 	"flag"
 	"fmt"
-	"ki18n/output"
+	"github.com/KingzCheung/ki18n/driver"
+	. "github.com/KingzCheung/ki18n/output"
 	"strings"
-	"errors"
-	"ki18n/driver"
 )
 
 const (
@@ -35,7 +35,7 @@ func main() {
 		fmt.Println(err.Error())
 		return
 	}
-	write := output.Write{
+	write := Write{
 		d,
 	}
 

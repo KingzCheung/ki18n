@@ -1,12 +1,12 @@
 package driver
 
 import (
-	"os"
-	"fmt"
 	"encoding/csv"
+	"fmt"
+	. "github.com/KingzCheung/ki18n/input"
 	"io"
+	"os"
 	"strings"
-	"ki18n/input"
 )
 
 type CSV struct {
@@ -21,11 +21,11 @@ func NewCSV(filename string) *CSV {
 }
 
 //解析 csv
-func (this *CSV) Parse(col int) map[string]string {
+func (c *CSV) Parse(col int) map[string]string {
 
 	var lang = make(map[string]string)
 
-	for k, v := range this.ReadFile() {
+	for k, v := range c.ReadFile() {
 		if k == 0 {
 			continue
 		}
@@ -35,9 +35,9 @@ func (this *CSV) Parse(col int) map[string]string {
 }
 
 // 读取文件返回二维数据
-func (this *CSV) ReadFile() (csvs [][]string) {
+func (c *CSV) ReadFile() (csvs [][]string) {
 
-	file, err := os.Open(this.name)
+	file, err := os.Open(c.name)
 	if err != nil {
 		fmt.Println("读取 CSV 文件失败，错误信息：", err.Error())
 	}
@@ -53,7 +53,7 @@ func (this *CSV) ReadFile() (csvs [][]string) {
 		}
 
 		for _, v := range rows {
-			cols := strings.Split(v, input.Splitter(";"))
+			cols := strings.Split(v, Splitter(";"))
 			csvs = append(csvs, cols)
 		}
 	}

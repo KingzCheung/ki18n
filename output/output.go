@@ -3,9 +3,9 @@ package output
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/KingzCheung/ki18n/driver"
+	"github.com/KingzCheung/ki18n/input"
 	"strings"
-	"ki18n/input"
-	"ki18n/driver"
 )
 
 const (

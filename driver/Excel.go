@@ -1,9 +1,9 @@
 package driver
 
 import (
-	"github.com/tealeg/xlsx"
 	"fmt"
-	"ki18n/input"
+	. "github.com/KingzCheung/ki18n/input"
+	"github.com/tealeg/xlsx"
 	"strings"
 )
 
@@ -17,21 +17,23 @@ func NewExcel(fileName string) *Excel {
 	}
 }
 
-func (this *Excel) ReadFile() *xlsx.File {
-	xlFile, err := xlsx.OpenFile(this.Name)
+func (e *Excel) ReadFile() *xlsx.File {
+	xlFile, err := xlsx.OpenFile(e.Name)
 	if err != nil {
-		fmt.Println("文件加载错误:", err.Error())
+		fmt.Println("文件加载错误")
+		return nil
 	}
+
 
 	return xlFile
 }
 
 //解析器
-func (this *Excel) Parse(col int) map[string]string {
+func (e *Excel) Parse(col int) map[string]string {
 	var lang = make(map[string]string, 5)
 	var jsonKey string
 
-	for _, sheet := range this.ReadFile().Sheet {
+	for _, sheet := range e.ReadFile().Sheet {
 		//遍历 行
 		for rk, row := range sheet.Rows {
 			if rk == 0 {
@@ -64,11 +66,11 @@ func (this *Excel) Parse(col int) map[string]string {
 
 //所有语言包合成一个JSON
 
-func (this *Excel) ParseAll() map[string]map[string]string {
+func (e *Excel) ParseAll() map[string]map[string]string {
 	locales := make(map[string]map[string]string)
 
-	for k, v := range input.Language() {
-		parse := this.Parse(k)
+	for k, v := range Language() {
+		parse := e.Parse(k)
 		locales[v] = parse
 	}
 
