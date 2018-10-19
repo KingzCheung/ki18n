@@ -77,6 +77,7 @@ func ToPHP(lang map[string]string) []byte {
 	php := prefixString
 	for k, v := range lang {
 		php += "\"" + k + "\"=>\"" + format(v) + "\",\n"
+
 	}
 	php += suffixString
 

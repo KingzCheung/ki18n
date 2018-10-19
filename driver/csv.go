@@ -48,7 +48,7 @@ func (c *CSV) ReadFile() (csvs [][]string) {
 		rows, err := csvr.Read()
 		if err == io.EOF {
 			break
-		} else if (err != nil) {
+		} else if err != nil {
 			return
 		}
 

@@ -24,7 +24,6 @@ func (e *Excel) ReadFile() *xlsx.File {
 		return nil
 	}
 
-
 	return xlFile
 }
 
@@ -41,7 +40,7 @@ func (e *Excel) Parse(col int) map[string]string {
 			}
 			if len(row.Cells) > 0 {
 				jsonKey = row.Cells[0].String()
-			}else {
+			} else {
 				continue
 			}
 			//去除空格
@@ -49,7 +48,7 @@ func (e *Excel) Parse(col int) map[string]string {
 			jsonKey = strings.TrimRight(jsonKey, "\r\n")
 			jsonKey = strings.TrimRight(jsonKey, "\r")
 			jsonKey = strings.Trim(jsonKey, " ")
-			if strings.Trim(jsonKey," ") == "" {
+			if strings.Trim(jsonKey, " ") == "" {
 				continue
 			}
 			if len(row.Cells) == 0 {
