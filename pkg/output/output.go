@@ -21,8 +21,11 @@ type Output struct {
 }
 
 func New(t typer.Typer) *Output {
+
 	return &Output{
 		inputFileType: t,
+		data:          map[string]string{},
+		output:        []byte(nil),
 	}
 }
 
@@ -42,6 +45,15 @@ func (o *Output) ToJson(col int) *Output {
 	}
 	return o
 }
+
+//func (o *Output)ToJsonMerge(langs []string) *Output  {
+//	var data map[string]string
+//	for k,v := range langs {
+//		data = o.inputFileType.Parse(k + 1)
+//
+//	}
+//	return o
+//}
 
 //返回 PHP 格式数据
 func (o *Output) ToPHP() *Output {

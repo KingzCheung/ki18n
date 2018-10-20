@@ -17,12 +17,12 @@ func NewExcel(fileName string) Excel {
 }
 
 func (e Excel) ReadFile() *xlsx.File {
+
 	xlFile, err := xlsx.OpenFile(e.Name)
 	if err != nil {
 		fmt.Println("文件加载错误")
 		return nil
 	}
-
 	return xlFile
 }
 
@@ -58,6 +58,7 @@ func (e Excel) Parse(col int) map[string]string {
 			}
 		}
 	}
+
 	return lang
 
 }

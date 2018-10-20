@@ -31,6 +31,6 @@ func Write(name string, content []byte) {
 	err := ioutil.WriteFile(langDir+"/"+name, content, 0755)
 	if err != nil {
 		fmt.Println(err.Error())
+		return
 	}
-
 }
