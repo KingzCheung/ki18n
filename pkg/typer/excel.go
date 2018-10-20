@@ -1,8 +1,7 @@
-package driver
+package typer
 
 import (
 	"fmt"
-	. "github.com/KingzCheung/ki18n/input"
 	"github.com/tealeg/xlsx"
 	"strings"
 )
@@ -11,13 +10,13 @@ type Excel struct {
 	Name string
 }
 
-func NewExcel(fileName string) *Excel {
-	return &Excel{
+func NewExcel(fileName string) Excel {
+	return Excel{
 		Name: fileName,
 	}
 }
 
-func (e *Excel) ReadFile() *xlsx.File {
+func (e Excel) ReadFile() *xlsx.File {
 	xlFile, err := xlsx.OpenFile(e.Name)
 	if err != nil {
 		fmt.Println("文件加载错误")
@@ -28,7 +27,7 @@ func (e *Excel) ReadFile() *xlsx.File {
 }
 
 //解析器
-func (e *Excel) Parse(col int) map[string]string {
+func (e Excel) Parse(col int) map[string]string {
 	var lang = make(map[string]string, 5)
 	var jsonKey string
 
@@ -61,17 +60,4 @@ func (e *Excel) Parse(col int) map[string]string {
 	}
 	return lang
 
-}
-
-//所有语言包合成一个JSON
-
-func (e *Excel) ParseAll() map[string]map[string]string {
-	locales := make(map[string]map[string]string)
-
-	for k, v := range Language() {
-		parse := e.Parse(k)
-		locales[v] = parse
-	}
-
-	return locales
 }

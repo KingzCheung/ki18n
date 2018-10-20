@@ -10,7 +10,7 @@ require (
 	github.com/smartystreets/goconvey v0.0.0-20180222194500-ef6db91d284a // indirect
 	github.com/spf13/cobra v0.0.3
 	github.com/spf13/pflag v1.0.3 // indirect
-	github.com/spf13/viper v1.2.1 // indirect
+	github.com/spf13/viper v1.2.1
 	github.com/tealeg/xlsx v1.0.3
 	gopkg.in/check.v1 v1.0.0-20180628173108-788fd7840127 // indirect
 )
