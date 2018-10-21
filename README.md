@@ -1,12 +1,14 @@
-# ki18n XLSX => (JSON,PHP,iOS) 生成语言包工具
+# ki18n EXCEL 语言包生成语言包工具
 
 ### 安装
-
-下载源码丢到`gopath`下,运行以下命令:
-
-```shell
-go build
-```
+ - [二进制下载](https://github.com/KingzCheung/ki18n/releases)
+ - 源码编译
+ ```shell
+    下载并安装依赖
+    go get -u github.com/KingzCheung/ki18n.git
+    cd cd $GOPATH/src/github.com/KingzCheung/ki18n
+    go build
+ ```
 
 交叉编译 `Windows`,`Linux`,`Mac`:
 
@@ -42,6 +44,46 @@ go build
 
 ### 用法
 
+> 0.03 以下参考： [点击这里](https://github.com/KingzCheung/ki18n/tree/0.03)
+
+通过以下命令查看有哪些命令
+
+```shell
+ki18n 是一个支持EXCEL，CSV 格式的语言文件快速转成JSON,PHP,IOS等平台的语言包工具
+
+Usage:
+  ki18n [flags]
+  ki18n [command]
+
+Available Commands:
+  help        Help about any command
+  json        生成 json 格式的语言包
+  php         生成 php 格式的语言包
+  strings     生成 strings 格式的语言包
+
+Flags:
+  -f, --file string        需要转换的源文件 (default "language.xlsx")
+  -h, --help               help for ki18n
+  -l, --language strings   转换目标的语言的列表
+
+Use "ki18n [command] --help" for more information about a command.
+
+```
+
+比如生成 json格式的语言包:
+
+```shell
+ki18n json // 默认会找当前目录下的 language.xlsx 文件
+ki18n json --file=your/dir/file.xlsx // 也可以通过 --file 来指定文件
+
+// 通过--language 来指定需要输出的语言包
+ki18n json -f=your/dir/file.xlsx --language=zh-CN,zh-HK,en-US
+```
+输出PHP格式
+```shell
+ki18n php
+```
+
 Excel 格式:
 
 | key   | 简体中文  | 繁体中文  | 英文          | ...  |
@@ -51,60 +93,11 @@ Excel 格式:
 
 默认三种语言包输出 `zh-CN`,`zh-HK`,`en-US`
 
-可以通过 i18n.ini 配置文件扩展:
+可以通过 i18n.yaml 配置文件扩展:
 
-```ini
-[DEFAULT]
-language = zh-CN,zh-HK,en-US
+```yaml
+language:
+  - zh-CN
+  - zh-HK
+  - en-US
 ```
-
-#### JSON
-
-Excel 文件取命令行工作目录下的`language.xlsx`  可以通过 `-f`指定:
-
-```shell
-ki18n -f yourxlsxname.xlsx
-```
-
-默认会生成一个`lang`目录,里面对应生成`i18n.ini`配置的JSON
-
-
-
-有一些前端项目使用的语言包可能需要合并为一个JSON 包，此时可以向`i18n.ini` 添加以下选项
-
-```ini
-merge = true
-```
-
-默认会生成一个叫`locales.json`的文件
-
-> 当此选项开启时， -t 选项会失效，并强行输出JSON包
-
-#### PHP
-
-生成 php格式的语言包:
-
-```shell
-ki18n -t=php -f=yourxlsxname.xlsx
-```
-
-默认生成php格式的数组,支持 `thinkphp`,`laravel`
-
-####  iOS
-
-生成 iOS格式语言包:
-
-```shell
-ki18n -t=strings -f=yourxlsxname.xlsx
-```
-
-
-
-### 添加CSV 格式
-
-`csv`格式文件默认分割符为 `;` 如果发现有冲突可以在`i18n.ini` 配置
-
-```ini
-splitter = ,
-```
-
