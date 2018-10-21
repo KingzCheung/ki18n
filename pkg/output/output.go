@@ -21,7 +21,6 @@ type Output struct {
 }
 
 func New(t typer.Typer) *Output {
-
 	return &Output{
 		inputFileType: t,
 		data:          map[string]string{},
@@ -30,9 +29,8 @@ func New(t typer.Typer) *Output {
 }
 
 // 把数据写到文件
-func (o *Output) Write(name string) {
-	write.Write(name, o.output)
-}
+func (o *Output) Write(name string)        { write.Write(name, o.output) }
+func (o *Output) WriteWithDir(name string) { write.WriteWithDir(name, o.output) }
 
 // 返回JSON 格式数据
 func (o *Output) ToJson(col int) *Output {
@@ -70,8 +68,10 @@ func (o *Output) ToPHP(col int) *Output {
 	return o
 }
 
-func (o *Output) ToStrings(lang map[string]string) *Output {
+// 返回 iOS可用的语言包数据
+func (o *Output) ToStrings(col int) *Output {
 	var str string
+	o.data = o.inputFileType.Parse(col)
 	for k, v := range o.data {
 		str += "\"" + k + "\" = \"" + format(v) + "\"\n"
 	}
