@@ -23,7 +23,10 @@ var rootCmd = &cobra.Command{
 	Short: "ki18n 是一个快速把excel[csv] 文件快速转成语言包的工具",
 	Long:  "ki18n 是一个支持EXCEL，CSV 格式的语言文件快速转成JSON,PHP,IOS等平台的语言包工具",
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("language:::", Languages)
+		// 命令默认生成 JSON 语言包
+		Run(func(col int, name string, o *output.Output) {
+			o.ToJson(col).Write(name + ".json")
+		})
 	},
 }
 
