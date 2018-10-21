@@ -56,10 +56,10 @@ func (o *Output) ToJson(col int) *Output {
 //}
 
 //返回 PHP 格式数据
-func (o *Output) ToPHP() *Output {
+func (o *Output) ToPHP(col int) *Output {
 	prefixString := "<?php\n return [\n"
 	suffixString := "];"
-
+	o.data = o.inputFileType.Parse(col)
 	php := prefixString
 	for k, v := range o.data {
 		php += "\"" + k + "\"=>\"" + format(v) + "\",\n"

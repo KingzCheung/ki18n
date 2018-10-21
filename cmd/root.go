@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"github.com/KingzCheung/ki18n/pkg/output"
 	"github.com/KingzCheung/ki18n/pkg/typer"
+	"github.com/KingzCheung/ki18n/pkg/write"
+	"github.com/gookit/color"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	"os"
@@ -57,8 +59,6 @@ func Suffix(fullFilename string) string {
 
 //返回生成的语言列表，优先cli
 func languages() []string {
-	//[]string{"zh-CN", "zh-HK", "en-US"}
-	fmt.Println(Languages, viper.GetStringSlice("language"))
 	// 如果cli有参数，就用优先使用cli参数
 	if 0 != len(Languages) {
 		return Languages
@@ -73,7 +73,32 @@ func languages() []string {
 
 }
 
-func Run(suffName string) {
+func Run(writeCallback func(col int, name string, o *output.Output)) {
+	var oPut *output.Output
+
+	// 判断文件是否存在
+	exists, _ := write.PathExists(Filename)
+	if !exists {
+		color.Danger.Println("错误: 文件 [\"" + Filename + "\"] 不存在！")
+		return
+	}
+
+	switch Suffix(Filename) {
+	case ".csv":
+		oPut = output.New(typer.NewCSV(Filename))
+	case ".xlsx":
+		oPut = output.New(typer.NewExcel(Filename))
+	}
+
+	for k, v := range languages() {
+		writeCallback(k, v, oPut)
+		//oPut.ToJson(k).Write(v + suffName)
+	}
+
+	color.Cyan.Println(">>>>> 语言包生成成功啦 <<<<<")
+}
+
+func run(suffName string) {
 	var oPut *output.Output
 
 	switch Suffix(Filename) {

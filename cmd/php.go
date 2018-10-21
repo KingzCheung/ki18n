@@ -5,7 +5,7 @@
 package cmd
 
 import (
-	"fmt"
+	"github.com/KingzCheung/ki18n/pkg/output"
 	"github.com/spf13/cobra"
 )
 
@@ -17,6 +17,8 @@ var phpCmd = &cobra.Command{
 	Use:   "php",
 	Short: "生成 php 格式的语言包",
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("php")
+		Run(func(col int, name string, o *output.Output) {
+			o.ToPHP(col).Write(name + ".php")
+		})
 	},
 }

@@ -5,6 +5,7 @@
 package cmd
 
 import (
+	"github.com/KingzCheung/ki18n/pkg/output"
 	"github.com/spf13/cobra"
 )
 
@@ -20,7 +21,9 @@ var jsonCmd = &cobra.Command{
 	Use:   "json",
 	Short: "生成 json 格式的语言包",
 	Run: func(cmd *cobra.Command, args []string) {
-		//fmt.Println("json")
-		Run(".json")
+		//生成 JSON 格式的语言包
+		Run(func(col int, name string, o *output.Output) {
+			o.ToJson(col).Write(name + ".json")
+		})
 	},
 }
