@@ -3,9 +3,9 @@ package typer
 import (
 	"encoding/csv"
 	"fmt"
+	"github.com/spf13/viper"
 	"io"
 	"os"
-	"strings"
 )
 
 type CSV struct {
@@ -28,33 +28,49 @@ func (c CSV) Parse(col int) map[string]string {
 		if k == 0 {
 			continue
 		}
-		lang[v[0]] = v[col]
+
+		if len(v) == 0 {
+			continue
+		}
+
+		lang[v[0]] = v[col+1]
 	}
+	//fmt.Println(lang)
 	return lang
 }
 
 // 读取文件返回二维数据
 func (c CSV) ReadFile() (csvs [][]string) {
-
+	csvs = make([][]string, 0)
 	file, err := os.Open(c.name)
 	if err != nil {
 		fmt.Println("读取 CSV 文件失败，错误信息：", err.Error())
 	}
 	defer file.Close()
 	csvr := csv.NewReader(file)
-
 	for {
 		rows, err := csvr.Read()
 		if err == io.EOF {
 			break
 		} else if err != nil {
+			if len(rows) == 0 {
+				return
+			}
 			return
 		}
+		//fmt.Println(rows)
 
-		for _, v := range rows {
-			cols := strings.Split(v, ";")
-			csvs = append(csvs, cols)
-		}
+		csvs = append(csvs, rows)
 	}
+	fmt.Println(csvs)
 	return csvs
+}
+
+// 分割符
+func splitter() string {
+	split := viper.GetString("splitter")
+	if split != "" {
+		return split
+	}
+	return ","
 }
