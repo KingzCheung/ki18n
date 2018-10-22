@@ -1,5 +1,5 @@
+file: language.xlsx
 language:
   - zh-CN
   - zh-HK
   - en-US
-splitter: ',' # csv 分割符

@@ -35,14 +35,14 @@ func init() {
 	viper.SetConfigName("i18n")
 	viper.AddConfigPath(".")
 	viper.SetConfigType("yaml")
-
-	if err := viper.ReadInConfig(); err != nil {
-		fmt.Println(err)
-	}
+	viper.ReadInConfig()
+	//if err := viper.ReadInConfig(); err != nil {
+	//	//fmt.Println(err)
+	//}
 
 	// 添加全局参数
 	// 待转换的文件
-	rootCmd.PersistentFlags().StringVarP(&Filename, "file", "f", "language.xlsx", "需要转换的源文件")
+	rootCmd.PersistentFlags().StringVarP(&Filename, "file", "f", "", "需要转换的源文件")
 	// 需要转换的语言列表
 	rootCmd.PersistentFlags().StringSliceVarP(&Languages, "language", "l", []string{}, "转换目标的语言的列表")
 }
@@ -52,6 +52,18 @@ func Execute() {
 		fmt.Println(err.Error())
 		os.Exit(1)
 	}
+}
+
+func getFileName() string {
+	if Filename != "" {
+		return Filename
+	}
+
+	if f := viper.GetString("file"); f != "" {
+		return f
+	}
+
+	return "language.xlsx"
 }
 
 //获取 文件后缀
@@ -80,17 +92,17 @@ func Run(writeCallback func(col int, name string, o *output.Output)) {
 	var oPut *output.Output
 
 	// 判断文件是否存在
-	exists, _ := write.PathExists(Filename)
+	exists, _ := write.PathExists(getFileName())
 	if !exists {
-		color.Danger.Println("错误: 文件 [\"" + Filename + "\"] 不存在！")
+		color.Danger.Println("错误: 文件 [\"" + getFileName() + "\"] 不存在！")
 		return
 	}
 
-	switch Suffix(Filename) {
+	switch Suffix(getFileName()) {
 	case ".csv":
-		oPut = output.New(typer.NewCSV(Filename))
+		oPut = output.New(typer.NewCSV(getFileName()))
 	case ".xlsx":
-		oPut = output.New(typer.NewExcel(Filename))
+		oPut = output.New(typer.NewExcel(getFileName()))
 	}
 
 	for k, v := range languages() {
@@ -99,21 +111,4 @@ func Run(writeCallback func(col int, name string, o *output.Output)) {
 	}
 
 	color.Cyan.Println(">>>>> 语言包生成成功啦 <<<<<")
-}
-
-func run(suffName string) {
-	var oPut *output.Output
-
-	switch Suffix(Filename) {
-	case ".csv":
-		oPut = output.New(typer.NewCSV(Filename))
-	case ".xlsx":
-		oPut = output.New(typer.NewExcel(Filename))
-	}
-
-	for k, v := range languages() {
-		oPut.ToJson(k).Write(v + suffName)
-	}
-
-	fmt.Println(">>>>> 语言包生成成功啦 <<<<<")
 }

@@ -3,7 +3,6 @@ package typer
 import (
 	"encoding/csv"
 	"fmt"
-	"github.com/spf13/viper"
 	"io"
 	"os"
 )
@@ -58,19 +57,8 @@ func (c CSV) ReadFile() (csvs [][]string) {
 			}
 			return
 		}
-		//fmt.Println(rows)
 
 		csvs = append(csvs, rows)
 	}
-	fmt.Println(csvs)
 	return csvs
-}
-
-// 分割符
-func splitter() string {
-	split := viper.GetString("splitter")
-	if split != "" {
-		return split
-	}
-	return ","
 }
