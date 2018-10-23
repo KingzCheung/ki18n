@@ -4,6 +4,7 @@ require (
 	github.com/Unknwon/goconfig v0.0.0-20180308125533-ef1e4c783f8f
 	github.com/gookit/color v1.1.5
 	github.com/gopherjs/gopherjs v0.0.0-20180825215210-0210a2f0f73c // indirect
+	github.com/inconshreveable/mousetrap v1.0.0 // indirect
 	github.com/jtolds/gls v4.2.1+incompatible // indirect
 	github.com/kr/pretty v0.1.0 // indirect
 	github.com/mitchellh/go-homedir v1.0.0 // indirect
