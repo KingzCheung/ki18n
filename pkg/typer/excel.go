@@ -30,7 +30,11 @@ func (e Excel) ReadFile() *xlsx.File {
 func (e Excel) Parse(col int) map[string]string {
 	var lang = make(map[string]string, 5)
 	var jsonKey string
-
+	defer func() {
+		if r := recover(); r != nil {
+			fmt.Println(r)
+		}
+	}()
 	for _, sheet := range e.ReadFile().Sheet {
 		//遍历 行
 		for rk, row := range sheet.Rows {
