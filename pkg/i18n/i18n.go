@@ -2,11 +2,13 @@ package i18n
 
 import (
 	"fmt"
+	"github.com/KingzCheung/ki18n/pkg/read/csv"
 	"github.com/KingzCheung/ki18n/pkg/read/excel"
 	"github.com/KingzCheung/ki18n/pkg/util"
 	"github.com/KingzCheung/ki18n/pkg/write/json"
 	"github.com/KingzCheung/ki18n/pkg/write/php"
 	"os"
+	"strings"
 )
 
 const (
@@ -38,8 +40,8 @@ type I18n struct {
 }
 
 func NewI18n(srcPath string, lang []string, format string) *I18n {
-	read := excel.NewExcel(srcPath)
-	write := getWriteInstance(format)
+	read := readInstance(srcPath)
+	write := writeInstance(format)
 	return &I18n{
 		read:     read,
 		write:    write,
@@ -48,7 +50,22 @@ func NewI18n(srcPath string, lang []string, format string) *I18n {
 	}
 }
 
-func getWriteInstance(format string) Writer {
+//获取读实例
+func readInstance(srcPath string) Reader {
+	s := strings.Split(srcPath, ".")
+	suffix := s[len(s)-1]
+	switch suffix {
+	case "xlsx":
+		return excel.NewExcel(srcPath)
+	case "csv":
+		return csv.NewCsv(srcPath)
+	default:
+		return excel.NewExcel(srcPath)
+	}
+}
+
+//获取写实例
+func writeInstance(format string) Writer {
 	switch format {
 	case JSON:
 		return json.NewJsonFile()

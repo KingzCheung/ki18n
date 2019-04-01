@@ -1,8 +1,8 @@
 package excel
 
 import (
-	"fmt"
 	"github.com/360EntSecGroup-Skylar/excelize"
+	"github.com/gookit/color"
 )
 
 type Excel struct {
@@ -14,7 +14,7 @@ type Excel struct {
 func NewExcel(filePath string) *Excel {
 	return &Excel{
 		filePath:  filePath,
-		workSheet: "工作表1",
+		workSheet: "Sheet1",
 	}
 }
 
@@ -23,7 +23,7 @@ func NewExcel(filePath string) *Excel {
 func (e *Excel) Read() [][]string {
 	xlsx, err := excelize.OpenFile(e.filePath)
 	if err != nil {
-		fmt.Println(err)
+		color.Red.Println(err)
 		return [][]string{}
 	}
 	return xlsx.GetRows(e.workSheet)
