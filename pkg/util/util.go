@@ -22,3 +22,13 @@ func PathExists(path string) (bool, error) {
 	}
 	return false, err
 }
+
+// InSlice 判断 一个值是否存在于一个slice中
+func InSlice(slices []string, search string) bool {
+	for _, s := range slices {
+		if s == search {
+			return true
+		}
+	}
+	return false
+}
