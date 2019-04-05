@@ -9,9 +9,9 @@ type N81i struct {
 }
 
 type DirReader interface {
-	DirRead()
+	DirRead() []map[string]string
 }
 
 type FileWriter interface {
-	FileWrite()
+	FileWrite(path string)
 }
