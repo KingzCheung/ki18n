@@ -29,6 +29,7 @@ func (p *Php) DirRead() []map[string]string {
 		return []map[string]string{}
 	}
 	languages := make([]map[string]string, 0)
+
 	for _, d := range dirList {
 		file, _ := os.Open(p.dir + "/" + d.Name())
 		phpStr, _ := ioutil.ReadAll(file)
@@ -49,6 +50,7 @@ func (p *Php) DirRead() []map[string]string {
 		dumper := &visitor.PrettyJsonDumper{
 			Writer: buf,
 		}
+
 		nodes.Walk(dumper)
 
 		var ast Ast
