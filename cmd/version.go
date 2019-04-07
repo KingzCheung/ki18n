@@ -9,9 +9,11 @@ const version = "2.0.0 beta"
 
 var (
 	versionCmd = &cobra.Command{
-		Use: "Print version information and quit",
+
+		Use:   "version",
+		Short: "Print version information and quit",
 		Run: func(cmd *cobra.Command, args []string) {
-			color.White.Printf("version:%s", version)
+			color.Green.Printf("ki18n version:%s\n", version)
 		},
 	}
 )
