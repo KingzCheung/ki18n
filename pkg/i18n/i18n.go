@@ -83,8 +83,13 @@ func (i *I18n) ParseToFile() {
 	}
 	//获取读取的数组
 	rows := i.read.Read()
+	languages := i.lang
+	//如果语言列表为空，就取表头
+	if len(languages) == 0 {
+		languages = rows[0][1:]
+	}
 
-	for k, v := range i.lang {
+	for k, v := range languages {
 		i.write.Format(i.fileType, rows, k)
 		wfileName := fmt.Sprintf("lang/%s.%s", v, i.fileType)
 		i.write.Write(wfileName)

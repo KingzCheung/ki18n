@@ -38,7 +38,7 @@ var format string
 var lang []string
 
 func init() {
-	buildCmd.Flags().StringSliceVarP(&lang, "lang", "l", []string{"zh-cn"}, "生成的语言包列表")
+	buildCmd.Flags().StringSliceVarP(&lang, "lang", "l", []string{}, "生成的语言包列表")
 	buildCmd.Flags().StringVarP(&format, "format", "", "json", "生成的格式")
 	rootCmd.AddCommand(buildCmd)
 }
