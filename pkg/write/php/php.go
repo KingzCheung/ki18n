@@ -6,16 +6,16 @@ import (
 	"os"
 )
 
-type PhpFile struct {
+type Php struct {
 	content string
 }
 
-func NewPhpFile() *PhpFile {
-	return new(PhpFile)
+func NewPhpFile() *Php {
+	return new(Php)
 }
 
 // 生成 PHP 数组文件
-func (p *PhpFile) Write(path string) {
+func (p *Php) Write(path string) {
 	file, err := os.OpenFile(path, os.O_CREATE|os.O_RDWR, 0644)
 
 	if err != nil {
@@ -30,12 +30,12 @@ func (p *PhpFile) Write(path string) {
 	p.clear()
 }
 
-func (p *PhpFile) clear() {
+func (p *Php) clear() {
 	p.content = ""
 }
 
 //生成PHP数组
-func (p *PhpFile) Format(fileType string, rows [][]string, index int) {
+func (p *Php) Format(fileType string, rows [][]string, index int) {
 	p.content = "<?php\n"
 	p.content += "return [\n"
 

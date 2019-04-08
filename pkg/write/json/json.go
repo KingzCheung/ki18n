@@ -7,16 +7,16 @@ import (
 	"strings"
 )
 
-type JsonFile struct {
+type Json struct {
 	content string
 }
 
-func NewJsonFile() *JsonFile {
-	return new(JsonFile)
+func NewJsonFile() *Json {
+	return new(Json)
 }
 
 //写入文件
-func (j *JsonFile) Write(path string) {
+func (j *Json) Write(path string) {
 	file, err := os.OpenFile(path, os.O_CREATE|os.O_RDWR, 0644)
 
 	if err != nil {
@@ -31,12 +31,12 @@ func (j *JsonFile) Write(path string) {
 }
 
 // 清空内容
-func (j *JsonFile) clear() {
+func (j *Json) clear() {
 	j.content = ""
 }
 
 //格式化数据
-func (j *JsonFile) Format(fileType string, rows [][]string, index int) {
+func (j *Json) Format(fileType string, rows [][]string, index int) {
 	j.content = "{"
 
 	for r, row := range rows {

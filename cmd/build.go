@@ -22,6 +22,7 @@ var buildCmd = &cobra.Command{
 		if !util.InSlice(suffix, s[len(s)-1]) {
 			return errors.New("文件名的后缀应该是【csv,xlsx】中的一个")
 		}
+
 		return nil
 	},
 	Run: func(cmd *cobra.Command, args []string) {
@@ -39,6 +40,6 @@ var lang []string
 
 func init() {
 	buildCmd.Flags().StringSliceVarP(&lang, "lang", "l", []string{}, "生成的语言包列表")
-	buildCmd.Flags().StringVarP(&format, "format", "", "json", "生成的格式")
+	buildCmd.Flags().StringVarP(&format, "format", "", "json", "生成的格式,支持:json,ios,php,swift,objc")
 	rootCmd.AddCommand(buildCmd)
 }

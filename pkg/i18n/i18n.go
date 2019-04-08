@@ -8,16 +8,20 @@ import (
 	"github.com/KingzCheung/ki18n/pkg/util"
 	"github.com/KingzCheung/ki18n/pkg/write/json"
 	"github.com/KingzCheung/ki18n/pkg/write/php"
+	strings2 "github.com/KingzCheung/ki18n/pkg/write/strings"
 	"github.com/gookit/color"
 	"os"
 	"strings"
 )
 
 const (
-	JSON     = "json"
-	PHP      = "php"
-	STRINGS  = "strings"
-	DIST_DIR = "lang"
+	JSON    = "json"
+	PHP     = "php"
+	STRINGS = "strings"
+	DistDir = "lang"
+	iOS     = "ios"
+	OBJC    = "objc"
+	Swift   = "swift"
 )
 
 // 步骤
@@ -52,7 +56,17 @@ func NewI18n(srcPath string, lang []string, format string) *I18n {
 		read:     read,
 		write:    write,
 		lang:     lang,
-		fileType: format,
+		fileType: fileType(format),
+	}
+}
+
+// fileType 适配不同的strings命令格式别名
+func fileType(t string) string {
+	switch t {
+	case STRINGS, iOS, Swift, OBJC:
+		return STRINGS
+	default:
+		return t
 	}
 }
 
@@ -72,13 +86,16 @@ func readInstance(srcPath string) (Reader, error) {
 	}
 }
 
-//获取写实例
+// writeInstance 获取写实例,默认获取json的实例
+// format 传入需要生成的格式
 func writeInstance(format string) Writer {
 	switch format {
 	case JSON:
 		return json.NewJsonFile()
 	case PHP:
 		return php.NewPhpFile()
+	case STRINGS, iOS, Swift, OBJC:
+		return strings2.NewStringsFile()
 	default:
 		return json.NewJsonFile()
 	}
@@ -87,8 +104,8 @@ func writeInstance(format string) Writer {
 func (i *I18n) ParseToFile() {
 
 	//生成目录
-	if b, _ := util.PathExists(DIST_DIR); !b {
-		_ = os.Mkdir(DIST_DIR, 0755)
+	if b, _ := util.PathExists(DistDir); !b {
+		_ = os.Mkdir(DistDir, 0755)
 	}
 	//获取读取的数组
 	rows := i.read.Read()
@@ -100,7 +117,7 @@ func (i *I18n) ParseToFile() {
 
 	for k, v := range languages {
 		i.write.Format(i.fileType, rows, k)
-		wFileName := fmt.Sprintf("lang/%s.%s", v, i.fileType)
+		wFileName := fmt.Sprintf("%s/%s.%s", DistDir, v, i.fileType)
 		i.write.Write(wFileName)
 	}
 
