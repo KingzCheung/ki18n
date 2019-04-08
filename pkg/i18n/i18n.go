@@ -1,12 +1,14 @@
 package i18n
 
 import (
+	"errors"
 	"fmt"
 	"github.com/KingzCheung/ki18n/pkg/read/csv"
 	"github.com/KingzCheung/ki18n/pkg/read/excel"
 	"github.com/KingzCheung/ki18n/pkg/util"
 	"github.com/KingzCheung/ki18n/pkg/write/json"
 	"github.com/KingzCheung/ki18n/pkg/write/php"
+	"github.com/gookit/color"
 	"os"
 	"strings"
 )
@@ -40,7 +42,11 @@ type I18n struct {
 }
 
 func NewI18n(srcPath string, lang []string, format string) *I18n {
-	read := readInstance(srcPath)
+	read, err := readInstance(srcPath)
+	if err != nil {
+		color.Red.Println(err)
+		return &I18n{}
+	}
 	write := writeInstance(format)
 	return &I18n{
 		read:     read,
@@ -51,16 +57,18 @@ func NewI18n(srcPath string, lang []string, format string) *I18n {
 }
 
 //获取读实例
-func readInstance(srcPath string) Reader {
+func readInstance(srcPath string) (Reader, error) {
 	s := strings.Split(srcPath, ".")
 	suffix := s[len(s)-1]
 	switch suffix {
 	case "xlsx":
-		return excel.NewExcel(srcPath)
+		return excel.NewExcel(srcPath), nil
 	case "csv":
-		return csv.NewCsv(srcPath)
+		return csv.NewCsv(srcPath), nil
+	case "xls":
+		return excel.NewExcel(srcPath), nil
 	default:
-		return excel.NewExcel(srcPath)
+		return nil, errors.New("无法识别表格文件")
 	}
 }
 
@@ -77,6 +85,7 @@ func writeInstance(format string) Writer {
 }
 
 func (i *I18n) ParseToFile() {
+
 	//生成目录
 	if b, _ := util.PathExists(DIST_DIR); !b {
 		_ = os.Mkdir(DIST_DIR, 0755)
@@ -91,8 +100,8 @@ func (i *I18n) ParseToFile() {
 
 	for k, v := range languages {
 		i.write.Format(i.fileType, rows, k)
-		wfileName := fmt.Sprintf("lang/%s.%s", v, i.fileType)
-		i.write.Write(wfileName)
+		wFileName := fmt.Sprintf("lang/%s.%s", v, i.fileType)
+		i.write.Write(wFileName)
 	}
 
 }
