@@ -109,12 +109,15 @@ func (i *I18n) ParseToFile() {
 	}
 	//获取读取的数组
 	rows := i.read.Read()
+	if len(rows) == 0 {
+		color.Red.Println("未读取到数据，可能 Sheet 名不是 Sheet1?")
+		return
+	}
 	languages := i.lang
 	//如果语言列表为空，就取表头
 	if len(languages) == 0 {
 		languages = rows[0][1:]
 	}
-
 	for k, v := range languages {
 		i.write.Format(i.fileType, rows, k)
 		wFileName := fmt.Sprintf("%s/%s.%s", DistDir, v, i.fileType)
