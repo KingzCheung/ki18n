@@ -44,60 +44,42 @@ go build
 
 ### 用法
 
-> 0.03 以下参考： [点击这里](https://github.com/KingzCheung/ki18n/tree/0.03)
+由于更换了excel的解析库，新的EXCEL必须要指定工作表，因此需要把工作表默认设置为 `Sheet1`。
 
-通过以下命令查看有哪些命令
+表格内容如下，第一列为key值，第二表开始为对应的语言翻译。
 
-```shell
-ki18n 是一个支持EXCEL，CSV 格式的语言文件快速转成JSON,PHP,IOS等平台的语言包工具
+| key      | zh-cn              | zh-hk              | en-us                         |
+| -------- | ------------------ | ------------------ | ----------------------------- |
+| hello    | 你好，世界         | 你好，世界         | Hello World                   |
+| wellcome | 欢迎来到计算机世界 | 歡迎來到計算機世界 | Welcome to the computer world |
+
+命令示例:
+
+```bash
+$ ./ki18n --help
+目标是解析一定格式的语言文件，来生成对应项目中可直接使用的语言包文件
 
 Usage:
   ki18n [flags]
   ki18n [command]
 
 Available Commands:
+  Print       
+  build       构建项目可使用的i18n文件
   help        Help about any command
-  json        生成 json 格式的语言包
-  php         生成 php 格式的语言包
-  strings     生成 strings 格式的语言包
 
 Flags:
-  -f, --file string        需要转换的源文件 (default "language.xlsx")
-  -h, --help               help for ki18n
-  -l, --language strings   转换目标的语言的列表
+  -h, --help      help for ki18n
+  -v, --version   Print version information and quit
 
 Use "ki18n [command] --help" for more information about a command.
 
 ```
 
-比如生成 json格式的语言包:
+生成语言包：
 
-```shell
-ki18n json // 默认会找当前目录下的 language.xlsx 文件
-ki18n json --file=your/dir/file.xlsx // 也可以通过 --file 来指定文件
-
-// 通过--language 来指定需要输出的语言包
-ki18n json -f=your/dir/file.xlsx --language=zh-CN,zh-HK,en-US
-```
-输出PHP格式
-```shell
-ki18n php
-```
-
-Excel 格式:
-
-| key   | 简体中文  | 繁体中文  | 英文          | ...  |
-| ----- | ----- | ----- | ----------- | ---- |
-| hello | 你好,世界 | 你好,世界 | hello wolrd | ...  |
-| ...   | ...   | ...   | ...         | ...  |
-
-默认三种语言包输出 `zh-CN`,`zh-HK`,`en-US`
-
-可以通过 i18n.yaml 配置文件扩展:
-
-```yaml
-language:
-  - zh-CN
-  - zh-HK
-  - en-US
+```bash
+ki18n build language.csv #默认会生成json格式的语言包文件
+ki18n build language.xlsx --format=php #指定生成php项目可用的语言包
+ki18n build --lang=zh-cn,en-us,zh-hk --format=php language.csv #指定生成语言包名称，与表格的列对应，如果不指定 --lang 参数，生成的文件名会取表头的值
 ```
