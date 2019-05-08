@@ -30,7 +30,7 @@ const (
 //解析文件内容
 //生成对应的数组文件
 type Reader interface {
-	Read() [][]string
+	Read() ([][]string, error)
 }
 
 type Writer interface {
@@ -103,15 +103,25 @@ func writeInstance(format string) Writer {
 
 func (i *I18n) ParseToFile() {
 
-	//生成目录
-	if b, _ := util.PathExists(DistDir); !b {
-		_ = os.Mkdir(DistDir, 0755)
-	}
 	//获取读取的数组
-	rows := i.read.Read()
+	rows, err := i.read.Read()
+
+	if err != nil {
+		color.Red.Println(err)
+		return
+	}
+
 	if len(rows) == 0 {
 		color.Red.Println("未读取到数据，可能 Sheet 名不是 Sheet1?")
 		return
+	}
+	//生成目录
+	if b, _ := util.PathExists(DistDir); !b {
+		err = os.Mkdir(DistDir, 0755)
+		if err != nil {
+			color.Red.Println(err)
+			return
+		}
 	}
 	languages := i.lang
 	//如果语言列表为空，就取表头

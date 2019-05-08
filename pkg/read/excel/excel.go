@@ -2,7 +2,6 @@ package excel
 
 import (
 	"github.com/360EntSecGroup-Skylar/excelize"
-	"github.com/gookit/color"
 )
 
 type Excel struct {
@@ -20,11 +19,10 @@ func NewExcel(filePath string) *Excel {
 
 //读取excel文件
 
-func (e *Excel) Read() [][]string {
+func (e *Excel) Read() ([][]string, error) {
 	xlsx, err := excelize.OpenFile(e.filePath)
 	if err != nil {
-		color.Red.Println(err)
-		return [][]string{}
+		return [][]string{}, err
 	}
-	return xlsx.GetRows(e.workSheet)
+	return xlsx.GetRows(e.workSheet), nil
 }
