@@ -82,7 +82,7 @@ func readInstance(srcPath string) (Reader, error) {
 	case "xls":
 		return excel.NewExcel(srcPath), nil
 	default:
-		return nil, errors.New("无法识别表格文件")
+		return nil, errors.New("unrecognized table file")
 	}
 }
 
@@ -112,7 +112,7 @@ func (i *I18n) ParseToFile() {
 	}
 
 	if len(rows) == 0 {
-		color.Red.Println("未读取到数据，可能 Sheet 名不是 Sheet1?")
+		color.Red.Println("No data is read, please check the Sheet name")
 		return
 	}
 	//生成目录

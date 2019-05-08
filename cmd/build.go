@@ -17,10 +17,10 @@ var buildCmd = &cobra.Command{
 	Args: func(cmd *cobra.Command, args []string) error {
 		s := strings.Split(args[0], ".")
 		if len(s) != 2 {
-			return errors.New("文件格式错误")
+			return errors.New("file format error")
 		}
 		if !util.InSlice(suffix, s[len(s)-1]) {
-			return errors.New("文件名的后缀应该是【csv,xlsx】中的一个")
+			return errors.New("this suffix is not supported")
 		}
 
 		return nil
