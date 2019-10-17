@@ -2,7 +2,7 @@ package strings
 
 import (
 	"fmt"
-	"github.com/KingzCheung/ki18n/pkg/util"
+	"github.com/kingzcheung/ki18n/pkg/util"
 	"os"
 )
 

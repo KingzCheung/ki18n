@@ -2,8 +2,8 @@ package cmd
 
 import (
 	"errors"
-	i18n2 "github.com/KingzCheung/ki18n/pkg/i18n"
-	"github.com/KingzCheung/ki18n/pkg/util"
+	i18n2 "github.com/kingzcheung/ki18n/pkg/i18n"
+	"github.com/kingzcheung/ki18n/pkg/util"
 	"github.com/spf13/cobra"
 	"strings"
 )
