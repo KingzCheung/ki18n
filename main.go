@@ -14,7 +14,7 @@
 package main
 
 import (
-	"github.com/KingzCheung/ki18n/cmd"
+	"github.com/kingzcheung/ki18n/cmd"
 )
 
 func main() {
